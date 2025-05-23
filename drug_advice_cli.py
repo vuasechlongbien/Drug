@@ -27,7 +27,7 @@ for name in drug_names:
             FROM Prescriptions
             WHERE name = ?
         """
-        print(f"Thực thi truy vấn: {query.replace('?', f"'{name}'")}")
+        # Removed the print statement for the query
         cursor.execute(query, name)
         row = cursor.fetchone()
         if row:
