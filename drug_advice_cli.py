@@ -30,8 +30,8 @@ for line in lines:
     # Loại bỏ dấu đầu dòng (nếu có)
     cleaned_line = re.sub(r'^\s*-\s*', '', line).strip()
     if cleaned_line:
-        # Tách tên thuốc và liều lượng với dấu "—"
-        match = re.match(r'^\s*([^\—]+?)\s*(?:\—\s*(.+))?$', cleaned_line)
+        # Tách tên thuốc và liều lượng với dấu "-"
+        match = re.match(r'^\s*([^\-]+?)\s*(?:\-\s*(.+))?$', cleaned_line)
         if match:
             drug_name = match.group(1).strip()
             dosage = match.group(2).strip() if match.group(2) else None
@@ -42,7 +42,7 @@ for line in lines:
             dosages.append(None)
 
 # 3. Lấy thông tin từng thuốc từ bảng Prescriptions
-print("\n🔍 Thông tin thuốc:")
+print("\nThông tin thuốc:")
 prescription_ids = []
 for name, dosage in zip(drug_names, dosages):
     try:
@@ -56,23 +56,23 @@ for name, dosage in zip(drug_names, dosages):
         if row:
             prescription_ids.append(row.prescription_id)
             effect_lines = row.effects.split('|') if row.effects else ['']
-            print(f"\n💊 Tên thuốc: {row.name}")
-            print(f"🌟 Công dụng: {effect_lines[0]}")
+            print(f"\nTên thuốc: {row.name}")
+            print(f"Công dụng: {effect_lines[0]}")
             if len(effect_lines) > 1:
-                print(f"📋 Chỉ định: {effect_lines[1]}")
-            print(f"💡 Liều dùng khuyến cáo: {row.dosage}")
+                print(f" Chỉ định: {effect_lines[1]}")
+            print(f"Liều dùng khuyến cáo: {row.dosage}")
             if dosage:
-                print(f"💉 Liều nhập vào: {dosage}")
+                print(f" Liều nhập vào: {dosage}")
                 # Chuẩn hóa liều lượng để so sánh
                 input_dosage = dosage.lower().replace(' ', '')
                 recommended_dosage = row.dosage.lower().replace(' ', '')
                 if input_dosage != recommended_dosage:
-                    print(f"⚠️ Cảnh báo: Liều nhập vào ({dosage}) khác với liều khuyến cáo ({row.dosage})")
-            print(f"⚠️ Tác dụng phụ: {row.side_effects}")
+                    print(f"⚠ Cảnh báo: Liều nhập vào ({dosage}) khác với liều khuyến cáo ({row.dosage})")
+            print(f"⚠ Tác dụng phụ: {row.side_effects}")
             if row.instructions:
-                print(f"📜 Hướng dẫn: {row.instructions}")
+                print(f"Hướng dẫn: {row.instructions}")
         else:
-            print(f"\n⚠️ Không tìm thấy thông tin cho thuốc: {name}")
+            print(f"\nKhông tìm thấy thông tin cho thuốc: {name}")
     except pyodbc.Error as e:
         print(f"Lỗi truy vấn thuốc {name}: {e}")
 

@@ -20,7 +20,6 @@ def process_with_gemini_and_tts(prompt, mp3_filename="response.mp3"):
 
 # === Chạy chatbot CLI ===
 def main():
-    print("=== Chatbot Gemini trên Terminal ===")
     while True:
         user_input = input("👤 Bạn: ")
         if user_input.lower() in ["exit", "quit"]:
